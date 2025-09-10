@@ -63,9 +63,10 @@
 
       // Encode text for URL safety
       const encodedText = encodeURIComponent(text);
+      const QRimageSize = 200;
 
       // Build QuickChart API URL (PNG format, 200x200 size)
-      const qrUrl = `https://quickchart.io/qr?text=${encodedText}&size=200`;
+      const qrUrl = `https://quickchart.io/qr?text=${encodedText}&size={QRimageSize}`;
 
       // Set QR image
       qrImg.src = qrUrl;
