@@ -3,9 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>QR Code Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+    input[type="text"] {
+      width: 60%;
+      padding: 8px;
+      font-size: 16px;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #qr-container {
+      margin-top: 20px;
+    }
+    #qr {
+      margin: 20px auto;
+      display: none;
+      border: 1px solid #ddd;
+      padding: 10px;
+      background: #fff;
+    }
+    #download {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <img src="https://api.qrserver.com/v1/create-qr-code/?data=Hello+World&size=200x200">
+  <h1>QR Code Generator</h1>
+  
+  <input type="text" id="qr-input" placeholder="Paste a URL or enter text here">
+  <button id="generate">Create QR Code</button>
+  
+  <div id="qr-container">
+    <img id="qr" alt="Your QR Code">
+    <br>
+    <a id="download" download="qrcode.png">Download Image</a>
+  </div>
+
+  <script>
+    const input = document.getElementById("qr-input");
+    const generateBtn = document.getElementById("generate");
+    const qrImg = document.getElementById("qr");
+    const downloadLink = document.getElementById("download");
+
+    generateBtn.addEventListener("click", () => {
+      const text = input.value.trim();
+      if (!text) {
+        alert("Please enter a URL or some text.");
+        return;
+      }
+
+      // Encode text for URL safety
+      const encodedText = encodeURIComponent(text);
+
+      // Build QuickChart API URL (PNG format, 200x200 size)
+      const qrUrl = `https://quickchart.io/qr?text=${encodedText}&size=200`;
+
+      // Set QR image
+      qrImg.src = qrUrl;
+      qrImg.style.display = "block";
+
+      // Set download link
+      downloadLink.href = qrUrl;
+      downloadLink.style.display = "inline-block";
+    });
+  </script>
 </body>
 </html>
